@@ -58,26 +58,31 @@ def test_website_add(browser):
     time.sleep(3)
 
     try:
+        #Cauta produsul
         select_product = browser.find_element(By.ID, "ProductSubmitButton-template--21367574724943__featured_product_iTmGJe")
         select_product.click()
 
         time.sleep(3)
 
+        #Verifica cosul de cumparaturi
         view_cart = browser.find_element(By.ID , "cart-notification-button")
         view_cart.click()
 
         time.sleep(3)
 
+        #Adauga in cos
         add_to_cart = browser.find_element(By.XPATH, "/html/body/main/div[2]/div/div/div/div/div[3]/div/div/div[2]/div/ul/li[1]/div")
         add_to_cart.click()
 
         time.sleep(5)
 
+        #Intoarce-te inapoi
         back = browser.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div[1]/header/div/div/div/div/header/h2/span/a")
         back.click()
 
         time.sleep(3)
 
+        #Inchide programul
         browser.close()
 
         print("Testul a fost finalizat cu succes!")
@@ -95,51 +100,53 @@ def test_website_review(browser):
 
     try:
 
+        #Scroll in jos
         scroll = browser.execute_script("window.scrollTo(0, 1300);")
 
         time.sleep(2)
 
+        #Apasa pe write review
         write_review = browser.find_element(By.XPATH , "/html/body/main/section[4]/div/div/div[2]/div/div[1]/div[1]/div[3]/a")
         write_review.click()
 
         time.sleep(2)
 
+        #Da o nota 
         nota_review = browser.find_element(By.XPATH , "/html/body/main/section[4]/div/div/div[2]/div/div[1]/div[2]/form/div[2]/span/a[5]")
         nota_review.click()
 
         time.sleep(2)
 
+        #Scrie un titlu 
         review_title = browser.find_element(By.NAME, "review_title")
         review_title.send_keys("Title")
 
         time.sleep(2)
 
+        #Scrie un comentariu 
         review_comments = browser.find_element(By.NAME, "review_body")
         review_comments.send_keys("Very good!")
 
         time.sleep(2)
 
+        #Scroll in jos
         scroll = browser.execute_script("window.scrollTo(1300, 2050);")
 
         time.sleep(2)
 
+        #Introdu numele
         name_review = browser.find_element(By.NAME, "reviewer_name")
         name_review.send_keys("John Smith")
 
         time.sleep(2)
 
+        #Introdu adresa de email
         email_review = browser.find_element(By.NAME, "reviewer_email")
         email_review.send_keys("john_smith2002@gmail.com")
 
-        time.sleep(2)
-
-        submit_review = browser.find_element(By.XPATH, "/html/body/main/section[4]/div/div/div[2]/div/div[1]/div[2]/form/div[10]/input")
-        submit_review.click()
-
-        scroll = browser.execute_script("window.scrollTo(0, 1300);")
-
-        time.sleep(2)
-
+        time.sleep(3)
+        
+        #Inchide programul
         browser.close()
 
 
