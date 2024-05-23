@@ -76,12 +76,6 @@ def test_website_add(browser):
 
         time.sleep(5)
 
-        #Intoarce-te inapoi
-        back = browser.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div[1]/header/div/div/div/div/header/h2/span/a")
-        back.click()
-
-        time.sleep(3)
-
         #Inchide programul
         browser.close()
 
