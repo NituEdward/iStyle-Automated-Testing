@@ -1,3 +1,38 @@
+# TESTCASE
+# Plan de Testare
+# Scopul Testării:
+# Testele urmăresc verificarea funcționalității de bază a site-ului https://snapsify.com, incluzând verificarea statusului paginii de start, funcționalitatea căutării, adăugarea unui produs în coș și adăugarea unui review.
+
+# Modalitatea de Testare:
+
+# Black Box Testing (testare automată cu Selenium pentru interfață utilizator și requests pentru HTTP)
+# Testare Automată
+# Instrumentele Folosite pentru Testare:
+
+# Selenium WebDriver pentru testarea interfeței utilizatorului
+# Modulul requests din Python pentru testarea HTTP
+# Pytest pentru organizarea și rularea testelor
+# Mediul de Testare:
+
+# Web pe Windows 11
+# Browser: Google Chrome
+
+# Ce va fi testat și rezultatul așteptat:
+
+# Verificarea statusului paginii de start:
+# URL: https://snapsify.com
+# Rezultatul așteptat: Codul de status HTTP 200
+# Funcționalitatea de căutare pe site:
+# URL: https://snapsify.com
+# Rezultatul așteptat: Găsirea unui produs specific și revenirea la pagina principală
+# Adăugarea unui produs în coș:
+# URL: https://snapsify.com
+# Rezultatul așteptat: Produsul este adăugat cu succes în coș
+# Adăugarea unui review pe site:
+# URL: https://snapsify.com
+# Rezultatul așteptat: Review-ul este adăugat cu succes
+
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
@@ -16,9 +51,11 @@ def test_homepage_status():
     url = "https://snapsify.com"
     response = requests.get(url)
     # Verificarea codului de status HTTP
-    assert response.status_code == 200, f"Codul de status este {response.status_code}, dar așteptam 200"
+    assert response.status_code == 200, f"Codul de status este {response.status_code}, dar asteptam 200"
+    # Verificarea lungimii raspunsului
+    assert len(response.text) > 0, "Conținutul răspunsului este gol"
 
-# Test pentru funcționalitatea de căutare pe site
+# Test pentru functionalitatea de cautare pe site
 def test_website_search(browser):
     url = "https://snapsify.com"
     browser.get(url)
@@ -34,14 +71,14 @@ def test_website_search(browser):
 
         time.sleep(3)  
 
-        # Verificarea existenței search_bar
+        # Verificarea existentei search_bar
         search_bar = browser.find_element(By.ID, "Search-In-Modal-1")
         assert search_bar is not None, "Bara de căutare nu a fost găsită"
         search_bar.send_keys("Portable Digital Frame")  
 
         time.sleep(3) 
 
-        # Găsirea existenței rezultatului cautat
+        # Găsirea existentei rezultatului cautat
         click_bar = browser.find_element(By.XPATH, "/html/body/div[1]/sticky-header/header/details-modal/details/div/div[2]/predictive-search/form/div[2]/div/div[1]/div[2]/div/ul/li/a/div")
         assert click_bar is not None, "Rezultatul căutării nu a fost găsit"
         click_bar.click()  
@@ -60,7 +97,7 @@ def test_website_search(browser):
     except Exception as e:
         pytest.fail(f"Testul a eșuat cu eroarea: {e}")  
 
-# Test pentru adăugarea unui produs în coș
+# Test pentru adaugarea unui produs în cos
 def test_website_add(browser):
     url = "https://snapsify.com"
     browser.get(url)
@@ -96,7 +133,7 @@ def test_website_add(browser):
     except Exception as e:
         pytest.fail(f"Testul a eșuat cu eroarea: {e}") 
 
-# Test pentru adăugarea unui review pe site
+# Test pentru adaugarea unui review pe site
 def test_website_review(browser):
     url = "https://snapsify.com"
     browser.get(url)
@@ -163,4 +200,4 @@ def test_website_review(browser):
     except Exception as e:
         pytest.fail(f"Testul a eșuat cu eroarea: {e}")  
 
-        
+
