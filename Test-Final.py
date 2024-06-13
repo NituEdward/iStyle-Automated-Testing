@@ -1,38 +1,3 @@
-# TESTCASE
-# Plan de Testare
-# Scopul Testării:
-# Testele urmăresc verificarea funcționalității de bază a site-ului https://snapsify.com, incluzând verificarea statusului paginii de start, funcționalitatea căutării, adăugarea unui produs în coș și adăugarea unui review.
-
-# Modalitatea de Testare:
-
-# Black Box Testing (testare automată cu Selenium pentru interfață utilizator și requests pentru HTTP)
-# Testare Automată
-# Instrumentele Folosite pentru Testare:
-
-# Selenium WebDriver pentru testarea interfeței utilizatorului
-# Modulul requests din Python pentru testarea HTTP
-# Pytest pentru organizarea și rularea testelor
-# Mediul de Testare:
-
-# Web pe Windows 11
-# Browser: Google Chrome
-
-# Ce va fi testat și rezultatul așteptat:
-
-# Verificarea statusului paginii de start:
-# URL: https://snapsify.com
-# Rezultatul așteptat: Codul de status HTTP 200
-# Funcționalitatea de căutare pe site:
-# URL: https://snapsify.com
-# Rezultatul așteptat: Găsirea unui produs specific și revenirea la pagina principală
-# Adăugarea unui produs în coș:
-# URL: https://snapsify.com
-# Rezultatul așteptat: Produsul este adăugat cu succes în coș
-# Adăugarea unui review pe site:
-# URL: https://snapsify.com
-# Rezultatul așteptat: Review-ul este adăugat cu succes
-
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
@@ -65,7 +30,7 @@ def test_website_search(browser):
 
     try:
         # Click pe search_bar
-        search_icon = browser.find_element(By.XPATH, "/html/body/div[1]/sticky-header/header/details-modal/details/summary/span")
+        search_icon = browser.find_element(By.XPATH, "//sticky-header//details-modal//summary/span")
         assert search_icon is not None, "Iconița de căutare nu a fost găsită"
         search_icon.click()  
 
@@ -79,14 +44,14 @@ def test_website_search(browser):
         time.sleep(3) 
 
         # Găsirea existentei rezultatului cautat
-        click_bar = browser.find_element(By.XPATH, "/html/body/div[1]/sticky-header/header/details-modal/details/div/div[2]/predictive-search/form/div[2]/div/div[1]/div[2]/div/ul/li/a/div")
+        click_bar = browser.find_element(By.XPATH, "//sticky-header//details-modal//predictive-search//form//ul/li/a/div")
         assert click_bar is not None, "Rezultatul căutării nu a fost găsit"
         click_bar.click()  
 
         time.sleep(3)  
 
         # Inapoi la pagina principala
-        back = browser.find_element(By.XPATH, "/html/body/div[1]/sticky-header/header/a/div/img")
+        back = browser.find_element(By.XPATH, "//sticky-header/header/a/div/img")
         assert back is not None, "Butonul de revenire nu a fost găsit"
         back.click()  
 
@@ -121,7 +86,7 @@ def test_website_add(browser):
         time.sleep(3)  
 
         # Adaugare in cosul de cumparaturi
-        add_to_cart = browser.find_element(By.XPATH, "/html/body/main/div[2]/div/div/div/div/div[3]/div/div/div[2]/div/ul/li[1]/div")
+        add_to_cart = browser.find_element(By.XPATH, "//main//div[3]//ul/li[1]/div")
         assert add_to_cart is not None, "Butonul de adăugare în coș nu a fost găsit"
         add_to_cart.click()  
 
@@ -132,6 +97,57 @@ def test_website_add(browser):
         print("Testul a fost finalizat cu succes!") 
     except Exception as e:
         pytest.fail(f"Testul a eșuat cu eroarea: {e}") 
+
+#Test pentru adaugarea mai multor produse in cos
+def test_add_multiple_products(browser):
+    url = "https://snapsify.com"
+    browser.get(url)
+    browser.maximize_window()
+
+    time.sleep(3)
+
+    try:
+        # Selectarea produsului
+        select_product = browser.find_element(By.ID, "ProductSubmitButton-template--21367574724943__featured_product_iTmGJe")
+        assert select_product is not None, "Butonul de selectare a produsului nu a fost găsit"
+        select_product.click()  
+
+        time.sleep(3)  
+
+        #Adauga mai multe produse
+        add_more_product = browser.find_element(By.NAME,"plus")
+
+        # Numarul de produse
+        num_prod = 3
+        for n in range(num_prod):
+             add_more_product.click()
+
+        time.sleep(3)  
+      
+        #Adauga in cos
+        add_to_cart = browser.find_element(By.ID,"ProductSubmitButton-template--21367574724943__featured_product_iTmGJe")
+        add_to_cart.click()
+
+        time.sleep(3)
+
+        #Vezi cosul
+        view_cart = browser.find_element(By.ID,"cart-notification-button")
+        view_cart.click()
+
+        time.sleep(3)
+
+        #Checkout
+        checkout = browser.find_element(By.ID,"checkout")
+        checkout.click()
+
+        time.sleep(5)
+
+        browser.close()
+
+        print("Testul a fost finalizat cu succes!")  
+        
+    except Exception as e:
+        pytest.fail(f"Testul a eșuat cu eroarea: {e}")  
 
 # Test pentru adaugarea unui review pe site
 def test_website_review(browser):
@@ -148,14 +164,14 @@ def test_website_review(browser):
         time.sleep(2) 
 
         # Scriere review
-        write_review = browser.find_element(By.XPATH, "/html/body/main/section[4]/div/div/div[2]/div/div[1]/div[1]/div[3]/a")
+        write_review = browser.find_element(By.XPATH, "//main//section[4]//div[2]//div[3]/a")
         assert write_review is not None, "Butonul de scriere a review-ului nu a fost găsit"
         write_review.click()  
 
         time.sleep(2) 
 
         # Nota Review
-        nota_review = browser.find_element(By.XPATH, "/html/body/main/section[4]/div/div/div[2]/div/div[1]/div[2]/form/div[2]/span/a[5]")
+        nota_review = browser.find_element(By.XPATH, "//main//section[4]//div[2]//form//span/a[5]")
         assert nota_review is not None, "Butonul de notare a review-ului nu a fost găsit"
         nota_review.click() 
 
@@ -197,6 +213,49 @@ def test_website_review(browser):
 
         print("Testul a fost finalizat cu succes!")  
         
+    except Exception as e:
+        pytest.fail(f"Testul a eșuat cu eroarea: {e}")  
+
+#Test pentru partea de footer 
+def test_footer_elements(browser):
+    url = "https://snapsify.com"
+    browser.get(url)
+    browser.maximize_window()
+
+    time.sleep(3)
+
+    try:
+        #Scroll pana jos la Footer
+        browser.execute_script("window.scrollTo(0, 5300);")  
+
+        time.sleep(3) 
+
+        #Deschide informatiile de contact 
+        footer = browser.find_element(By.XPATH, "//footer//ul/li[5]/small/a")
+        assert footer is not None, "Footer-ul nu a fost găsit"
+        browser.execute_script("arguments[0].setAttribute('target', '_blank');", footer)
+        footer.click()
+        browser.switch_to.window(browser.window_handles[0])
+
+        time.sleep(3)
+
+        #Deschide Termenii si serviciile 
+        footer2 = browser.find_element(By.XPATH, "//footer//ul/li[3]/small/a")
+        assert footer2 is not None, "Footer-ul2 nu a fost găsit"
+        browser.execute_script("arguments[0].setAttribute('target', '_blank');", footer2)
+        footer2.click()
+        browser.switch_to.window(browser.window_handles[1])
+
+        time.sleep(3)
+
+        browser.switch_to.window(browser.window_handles[-1])
+
+        time.sleep(3)
+
+        browser.close()
+
+        print("Testul a fost finalizat cu succes!")  
+
     except Exception as e:
         pytest.fail(f"Testul a eșuat cu eroarea: {e}")  
 
