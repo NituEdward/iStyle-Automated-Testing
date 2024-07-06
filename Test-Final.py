@@ -31,30 +31,26 @@ def test_website_search(browser):
 
     time.sleep(3)  
 
-    try:
         #Inchidere Cookie Element
-        cookie_element = browser.find_element(By.XPATH, "//div[4]//button[4]")
-        cookie_element.click()
-        time.sleep(3)
+    cookie_element = browser.find_element(By.XPATH, "//div[4]//button[4]")
+    cookie_element.click()
+    time.sleep(3)
 
-        # Click pe search_bar
-        click_search = browser.find_element(By.ID,"algolia-showsearch")
-        click_search.click()
+    # Click pe search_bar
+    click_search = browser.find_element(By.ID,"algolia-showsearch")
+    click_search.click()
 
-        time.sleep(3)
+    time.sleep(3)
         
-        #Search
-        search_bar = browser.find_element(By.ID,"search")
-        assert search_bar.is_displayed(), "Bara de căutare nu este vizibila"
-        search_bar.send_keys("Airpods")
-        time.sleep(1)
-        search_bar.send_keys(Keys.ENTER)  
+    #Search
+    search_bar = browser.find_element(By.ID,"search")
+    assert search_bar.is_displayed(), "Bara de căutare nu este vizibila"
+    search_bar.send_keys("Airpods")
+    time.sleep(1)
+    search_bar.send_keys(Keys.ENTER)  
 
-        time.sleep(3)
+    time.sleep(3)
        
-    except Exception as e:
-        pytest.fail(f"Testul a eșuat cu eroarea: {e}")  
-
 
 #Test pentru adaugarea produsului in cos
 def test_website_add(browser):
@@ -62,56 +58,51 @@ def test_website_add(browser):
     browser.get(url)
     browser.maximize_window()  
 
-    try:
-        #Inchidere Cookie Element
-        cookie_element = browser.find_element(By.XPATH, "//div[4]//button[4]")
-        cookie_element.click()
-        time.sleep(3)
+    #Inchidere Cookie Element
+    cookie_element = browser.find_element(By.XPATH, "//div[4]//button[4]")
+    cookie_element.click()        
+    
+    time.sleep(3)
 
-        # Click pe search_bar
-        click_search = browser.find_element(By.ID,"algolia-showsearch")
-        click_search.click()
+    # Click pe search_bar
+    click_search = browser.find_element(By.ID,"algolia-showsearch")
+    click_search.click()
 
-        time.sleep(3)
+    time.sleep(3)
         
-        #Search
-        search_bar = browser.find_element(By.ID,"search")
-        assert search_bar.is_displayed(), "Bara de cautare nu este vizibila"
-        search_bar.send_keys("Airpods")
-        time.sleep(1)
-        search_bar.send_keys(Keys.ENTER)  
+    #Search
+    search_bar = browser.find_element(By.ID,"search")
+    assert search_bar.is_displayed(), "Bara de cautare nu este vizibila"
+    search_bar.send_keys("Airpods")
+    time.sleep(1)
+    search_bar.send_keys(Keys.ENTER)  
 
-        time.sleep(3)
+    time.sleep(3)
 
-        #Selecteaza produsul
-        item_product = browser.find_element(By.CLASS_NAME,"product-item-name")
-        item_product.click()
+    #Selecteaza produsul
+    item_product = browser.find_element(By.CLASS_NAME,"product-item-name")
+    item_product.click()
 
-        time.sleep(3)
+    time.sleep(3)
 
-        #Adauga produsul in cos
-        add_product = browser.find_element(By.CLASS_NAME,"tocart-error__text")
-        add_product.click()
+    #Adauga produsul in cos
+    add_product = browser.find_element(By.CLASS_NAME,"tocart-error__text")
+    add_product.click()
 
-        time.sleep(3)
+    time.sleep(3)
 
-        #Vizualizare cos de cumparaturi
-        cart = browser.find_element(By.XPATH, "//header//div[3]/div[3]/a/div/div/span[2]")
+    #Vizualizare cos de cumparaturi
+    cart = browser.find_element(By.XPATH, "//header//div[3]/div[3]/a/div/div/span[2]")
 
-        cart.click()
+    cart.click()
 
-        time.sleep(3)
+    time.sleep(3)
 
-        #Checkout
-        checkout = browser.find_element(By.CSS_SELECTOR,"#minicart-content-wrapper > div.block-content > div.actions > a")
-        checkout.click()
+    #Checkout
+    checkout = browser.find_element(By.CSS_SELECTOR,"#minicart-content-wrapper > div.block-content > div.actions > a")
+    checkout.click()
 
-        time.sleep(3)
-
-       
-    except Exception as e:
-        pytest.fail(f"Testul a eșuat cu eroarea: {e}")    
-
+    time.sleep(3)
 
 #Test pentru adaugarea mai multor produse in cos
 def test_add_multiple_prod(browser):
@@ -119,65 +110,60 @@ def test_add_multiple_prod(browser):
     browser.get(url)
     browser.maximize_window()  
 
-    try:
-        #Inchidere Cookie Element
-        cookie_element = browser.find_element(By.XPATH, "//div[4]//button[4]")
-        cookie_element.click()
-        time.sleep(3)
 
-        # Click pe search_bar
-        click_search = browser.find_element(By.ID,"algolia-showsearch")
-        click_search.click()
+    #Inchidere Cookie Element
+    cookie_element = browser.find_element(By.XPATH, "//div[4]//button[4]")
+    cookie_element.click()
+    time.sleep(3)
 
-        time.sleep(3)
+    # Click pe search_bar
+    click_search = browser.find_element(By.ID,"algolia-showsearch")
+    click_search.click()
+
+    time.sleep(3)
         
-        #Search
-        search_bar = browser.find_element(By.ID,"search")
-        assert search_bar.is_displayed(), "Bara de căutare nu este vizibila"
-        search_bar.send_keys("Airpods")
-        time.sleep(1)
-        search_bar.send_keys(Keys.ENTER)  
+    #Search
+    search_bar = browser.find_element(By.ID,"search")
+    assert search_bar.is_displayed(), "Bara de căutare nu este vizibila"
+    search_bar.send_keys("Airpods")
+    time.sleep(1)
+    search_bar.send_keys(Keys.ENTER)  
 
-        time.sleep(3)
+    time.sleep(3)
 
-        #Selecteaza produsul
-        item_product = browser.find_element(By.CLASS_NAME,"product-item-name")
-        item_product.click()
+    #Selecteaza produsul
+    item_product = browser.find_element(By.CLASS_NAME,"product-item-name")
+    item_product.click()
 
-        time.sleep(3)
+    time.sleep(3)
 
-        #Adauga produsul in cos
-        add_product = browser.find_element(By.CLASS_NAME,"tocart-error__text")
-        add_product.click()
+    #Adauga produsul in cos
+    add_product = browser.find_element(By.CLASS_NAME,"tocart-error__text")
+    add_product.click()
 
-        time.sleep(3)
+    time.sleep(3)
 
-        #Vizualizare cos de cumparaturi
-        cart = browser.find_element(By.XPATH, "//header//div[3]/div[3]/a/div/div/span[2]")
-        cart.click()
+    #Vizualizare cos de cumparaturi
+    cart = browser.find_element(By.XPATH, "//header//div[3]/div[3]/a/div/div/span[2]")
+    cart.click()
 
-        time.sleep(3)
+    time.sleep(3)
 
-        #Checkout
-        checkout = browser.find_element(By.CSS_SELECTOR,"#minicart-content-wrapper > div.block-content > div.actions > a")
-        checkout.click()
+    #Checkout
+    checkout = browser.find_element(By.CSS_SELECTOR,"#minicart-content-wrapper > div.block-content > div.actions > a")
+    checkout.click()
 
-        time.sleep(3)
+    time.sleep(3)
 
-        #Adauga mai multe produse
-        add_more_product = browser.find_element(By.XPATH, "//div[2]/form/div[1]/div/div[1]/div[2]/div[2]/div/div/div[2]")
+    #Adauga mai multe produse
+    add_more_product = browser.find_element(By.XPATH, "//div[2]/form/div[1]/div/div[1]/div[2]/div[2]/div/div/div[2]")
   
-        # Numarul de produse
-        num_prod = 3
-        for nr in range(num_prod):
-             add_more_product.click()
+    # Numarul de produse
+    num_prod = 3
+    for nr in range(num_prod):
+        add_more_product.click()
 
-        time.sleep(3)
-
-       
-    except Exception as e:
-        pytest.fail(f"Testul a eșuat cu eroarea: {e}")    
-
+    time.sleep(3)
 
 #Test pentru inregistrare
 def test_login(browser):
@@ -185,42 +171,37 @@ def test_login(browser):
     browser.get(url)
     browser.maximize_window()  
 
-    try:
-        #Inchidere Cookie Element
-        cookie_element = browser.find_element(By.XPATH, "//div[4]//button[4]")
-        cookie_element.click()
-        time.sleep(3)
+    #Inchidere Cookie Element
+    cookie_element = browser.find_element(By.XPATH, "//div[4]//button[4]")
+    cookie_element.click()
+    time.sleep(3)
 
-        #Click pe iconita de Login
-        user_icon = browser.find_element(By.ID,"header-account-toggle")
-        user_icon.click()
+    #Click pe iconita de Login
+    user_icon = browser.find_element(By.ID,"header-account-toggle")
+    user_icon.click()
 
-        time.sleep(3)
+    time.sleep(3)
 
-        #Login
-        login = browser.find_element(By.CSS_SELECTOR,"#ui-id-2 > ul > li.authorization-link > a")
-        login.click()
+    #Login
+    login = browser.find_element(By.CSS_SELECTOR,"#ui-id-2 > ul > li.authorization-link > a")
+    login.click()
 
-        time.sleep(3)
+    time.sleep(3)
 
-        #Date de logare
-        email_input = browser.find_element(By.ID, "email")
-        password_input = browser.find_element(By.ID, "pass")
-        login_button = browser.find_element(By.ID, "send2")
+    #Date de logare
+    email_input = browser.find_element(By.ID, "email")
+    password_input = browser.find_element(By.ID, "pass")
+    login_button = browser.find_element(By.ID, "send2")
 
-        assert email_input.is_displayed(), "Campul pentru email nu este vizibil"
-        assert password_input.is_displayed(), "Campul pentru parolă nu este vizibil"
-        assert login_button.is_displayed(), "Butonul de login nu este vizibil"
+    assert email_input.is_displayed(), "Campul pentru email nu este vizibil"
+    assert password_input.is_displayed(), "Campul pentru parolă nu este vizibil"
+    assert login_button.is_displayed(), "Butonul de login nu este vizibil"
 
-        email_input.send_keys("neatamarius895@gmail.com")
-        password_input.send_keys("!Icloud123")
-        login_button.click()
+    email_input.send_keys("neatamarius895@gmail.com")
+    password_input.send_keys("!Icloud123")
+    login_button.click()
         
-        time.sleep(3)
-
-    except Exception as e:
-        pytest.fail(f"Testul a eșuat cu eroarea: {e}")    
-
+    time.sleep(3)
 
 #Test News Letter
 def test_news_letter(browser):
@@ -228,109 +209,101 @@ def test_news_letter(browser):
     browser.get(url)
     browser.maximize_window()  
 
-    try:
-        #Inchidere Cookie Element
-        cookie_element = browser.find_element(By.XPATH, "//div[4]//button[4]")
-        cookie_element.click()
-        time.sleep(3)
+    #Inchidere Cookie Element
+    cookie_element = browser.find_element(By.XPATH, "//div[4]//button[4]")
+    cookie_element.click()
+    time.sleep(3)
 
-        #Scroll pana jos la Footer
-        browser.execute_script("window.scrollTo(0, 4700);")  
+    #Scroll pana jos la Footer
+    browser.execute_script("window.scrollTo(0, 4700);")  
 
-        time.sleep(3)
+    time.sleep(3)
 
-        #Inchidere reclama
-        popout_close = browser.find_element(By.CLASS_NAME,"mfp-close")
-        popout_close.click()
+    #Inchidere reclama
+    popout_close = browser.find_element(By.CLASS_NAME,"mfp-close")
+    popout_close.click()
 
-        time.sleep(3)
+    time.sleep(3)
 
-        #Introducere date
-        nume_input = browser.find_element(By.NAME, "Last Name")
-        prenume_input = browser.find_element(By.NAME, "First Name")
-        email_input = browser.find_element(By.ID, "Email Address")
-        box = browser.find_element(By.ID,"ui-kit-checkbox-1")
+    #Introducere date
+    nume_input = browser.find_element(By.NAME, "Last Name")
+    prenume_input = browser.find_element(By.NAME, "First Name")
+    email_input = browser.find_element(By.ID, "Email Address")
+    box = browser.find_element(By.ID,"ui-kit-checkbox-1")
 
-        nume_input.send_keys("Marius")
-        prenume_input.send_keys("Neata")
-        email_input.send_keys("mariusneata955@gmail.com")
-        box.click()
+    nume_input.send_keys("Marius")
+    prenume_input.send_keys("Neata")
+    email_input.send_keys("mariusneata955@gmail.com")
+    box.click()
 
-        time.sleep(2)
+    time.sleep(2)
 
-        #Apasa pe butonul de abonare
-        subscribe_button = browser.find_element(By.CSS_SELECTOR,"#landingpage > div:nth-child(15) > div > div > div > div > div > form > div > div.col-lg-4 > button")
-        assert subscribe_button is not None, "Butonul de abonare nu a fost gasit"
-        subscribe_button.click()
+    #Apasa pe butonul de abonare
+    subscribe_button = browser.find_element(By.CSS_SELECTOR,"#landingpage > div:nth-child(15) > div > div > div > div > div > form > div > div.col-lg-4 > button")
+    assert subscribe_button is not None, "Butonul de abonare nu a fost gasit"
+    subscribe_button.click()
 
-        time.sleep(3)
-
-    except Exception as e:
-        pytest.fail(f"Testul a eșuat cu eroarea: {e}")    
-
-
+    time.sleep(3)
+ 
 #Test pentru Feedback
 def test_contact(browser):
     url = "https://istyle.ro"
     browser.get(url)
     browser.maximize_window()  
 
-    try:
-        #Inchidere Cookie Element
-        cookie_element = browser.find_element(By.XPATH, "//div[4]//button[4]")
-        cookie_element.click()
-        time.sleep(3)
 
-        #Scroll pana jos la Footer
-        browser.execute_script("window.scrollTo(0, 5300);")  
+    #Inchidere Cookie Element
+    cookie_element = browser.find_element(By.XPATH, "//div[4]//button[4]")
+    cookie_element.click()
+    time.sleep(3)
 
-        time.sleep(3)
+    #Scroll pana jos la Footer
+    browser.execute_script("window.scrollTo(0, 5300);")  
 
-        #Inchidere reclama
-        popout_close = browser.find_element(By.CLASS_NAME,"mfp-close")
-        popout_close.click()
+    time.sleep(3)
 
-        time.sleep(3)
+    #Inchidere reclama
+    popout_close = browser.find_element(By.CLASS_NAME,"mfp-close")
+    popout_close.click()
 
-        #Contact
-        contact = browser.find_element(By.CSS_SELECTOR,"#landingpage > div:nth-child(16) > div > div:nth-child(2) > div > div > a")
-        contact.click()
+    time.sleep(3)
 
-        time.sleep(3)
+    #Contact
+    contact = browser.find_element(By.CSS_SELECTOR,"#landingpage > div:nth-child(16) > div > div:nth-child(2) > div > div > a")
+    contact.click()
 
-        #Scroll 
-        browser.execute_script("window.scrollTo(0, 1700);")  
+    time.sleep(3)
 
-        time.sleep(3)
+    #Scroll 
+    browser.execute_script("window.scrollTo(0, 1700);")  
 
-        #Feedback
-        feedback = browser.find_element(By.ID,"feedBackForm")
-        assert feedback is not None, "Feedback nu a fost gasit"
-        feedback.click()
+    time.sleep(3)
 
-        time.sleep(3)
+    #Feedback
+    feedback = browser.find_element(By.ID,"feedBackForm")
+    assert feedback is not None, "Feedback nu a fost gasit"
+    feedback.click()
 
-        #Review
-        review_input = browser.find_element(By.NAME,"Text rating")
-        assert review_input is not None, "Review nu a fost gasit"
-        review_input.send_keys("Foarte bun!")
+    time.sleep(3)
 
-        #Email
-        email_input = browser.find_element(By.NAME,"Email")
-        assert email_input is not None, "Email nu a fost gasit"
-        email_input.send_keys("mariusneata999@gmail.com")
+     #Review
+    review_input = browser.find_element(By.NAME,"Text rating")
+    assert review_input is not None, "Review nu a fost gasit"
+    review_input.send_keys("Foarte bun!")
 
-        #Checkbox
-        checkbox = browser.find_element(By.ID,"gdpr_checkbox")
-        assert checkbox is not None, "GDPR checkbox nu a fost gasit"
-        checkbox.click()
+    #Email
+    email_input = browser.find_element(By.NAME,"Email")
+    assert email_input is not None, "Email nu a fost gasit"
+    email_input.send_keys("mariusneata999@gmail.com")
 
-        #Trimite feedback
-        send_feedback = browser.find_element(By.CSS_SELECTOR,"#reviewForm > input")
-        assert send_feedback is not None, "Feedback send nu a fost gasit"
-        send_feedback.click()
+    #Checkbox
+    checkbox = browser.find_element(By.ID,"gdpr_checkbox")
+    assert checkbox is not None, "GDPR checkbox nu a fost gasit"
+    checkbox.click()
 
-        time.sleep(3)
+    #Trimite feedback
+    send_feedback = browser.find_element(By.CSS_SELECTOR,"#reviewForm > input")
+    assert send_feedback is not None, "Feedback send nu a fost gasit"
+    send_feedback.click()
 
-    except Exception as e:
-        pytest.fail(f"Testul a eșuat cu eroarea: {e}")    
+    time.sleep(3)
