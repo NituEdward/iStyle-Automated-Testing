@@ -1,14 +1,21 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.chrome.options import Options
 import time
 import pytest
 import requests
 
+
+
 #Setup pentru Browser
 @pytest.fixture
 def browser():
-    driver = webdriver.Chrome()
+    chrome_options = Options()
+    chrome_options.add_argument("--disable-search-engine-choice-screen")
+    driver = webdriver.Chrome(options=chrome_options)
+    driver.maximize_window()
     yield driver
     driver.quit()
 
@@ -31,7 +38,7 @@ def test_website_search(browser):
 
     time.sleep(3)  
 
-        #Inchidere Cookie Element
+    #Inchidere Cookie Element
     cookie_element = browser.find_element(By.XPATH, "//div[4]//button[4]")
     cookie_element.click()
     time.sleep(3)
@@ -50,7 +57,6 @@ def test_website_search(browser):
     search_bar.send_keys(Keys.ENTER)  
 
     time.sleep(3)
-       
 
 #Test pentru adaugarea produsului in cos
 def test_website_add(browser):
@@ -88,12 +94,12 @@ def test_website_add(browser):
     #Adauga produsul in cos
     add_product = browser.find_element(By.CLASS_NAME,"tocart-error__text")
     add_product.click()
+    # assert add_product.is_displayed(),"Produsul nu a fost adaugat in cos"
 
     time.sleep(3)
 
     #Vizualizare cos de cumparaturi
     cart = browser.find_element(By.XPATH, "//header//div[3]/div[3]/a/div/div/span[2]")
-
     cart.click()
 
     time.sleep(3)
@@ -101,6 +107,41 @@ def test_website_add(browser):
     #Checkout
     checkout = browser.find_element(By.CSS_SELECTOR,"#minicart-content-wrapper > div.block-content > div.actions > a")
     checkout.click()
+
+    time.sleep(3)
+
+    serie_produs = "MV7N2ZM/A"
+    class_produs = browser.find_element(By.CLASS_NAME,"block__sku")
+
+    assert class_produs.is_displayed(),"Produsul nu a fost adaugat in cos"
+
+    checkout2 = browser.find_element(By.CSS_SELECTOR,"#maincontent > div.wrapper > div > div > div.cart-container > div.row > div.col-lg-4.col-xl-4.col-cart-summary > div > ul > li:nth-child(2) > button > span")
+    checkout2.click()
+
+    time.sleep(3)
+
+    email_input = browser.find_element(By.ID,"customer-email")
+    email_input.send_keys("neatamarius895@gmail.com")
+
+    time.sleep(3)
+
+    password_input = browser.find_element(By.ID,"customer-password")
+    password_input.send_keys("!Icloud123")
+
+    time.sleep(3)
+
+    login_button = browser.find_element(By.CSS_SELECTOR,"#checkout > section > div.section__wrapper.row > div.section__content.col-12.col-lg-7 > div.block.block--checkout-step.block--authentication.is-active > div.block__content > div > div > form > fieldset.fieldset.hidden-fields > div.actions-toolbar > div.primary > button")
+    login_button.click()
+
+    time.sleep(10)
+
+    select_checkout = browser.find_element(By.CSS_SELECTOR,"#checkout-shipping-method-load > div.shipping-methods__tabs > div > div:nth-child(1) > a")
+    select_checkout.click()
+
+    time.sleep(3)
+
+    continue_checkout = browser.find_element(By.CSS_SELECTOR,"#tab1 > div.field.form-group > button > span")
+    continue_checkout.click()
 
     time.sleep(3)
 
@@ -219,6 +260,7 @@ def test_news_letter(browser):
 
     time.sleep(3)
 
+
     #Inchidere reclama
     popout_close = browser.find_element(By.CLASS_NAME,"mfp-close")
     popout_close.click()
@@ -239,14 +281,14 @@ def test_news_letter(browser):
     time.sleep(2)
 
     #Apasa pe butonul de abonare
-    subscribe_button = browser.find_element(By.CSS_SELECTOR,"#landingpage > div:nth-child(15) > div > div > div > div > div > form > div > div.col-lg-4 > button")
+    subscribe_button = browser.find_element(By.CSS_SELECTOR,"#landingpage > div:nth-child(16) > div > div > div > div > div > form > div > div.col-lg-4 > button")
     assert subscribe_button is not None, "Butonul de abonare nu a fost gasit"
     subscribe_button.click()
 
     time.sleep(3)
- 
+
 #Test pentru Feedback
-def test_contact(browser):
+def test_contact(browser:webdriver.Chrome):
     url = "https://istyle.ro"
     browser.get(url)
     browser.maximize_window()  
@@ -269,7 +311,7 @@ def test_contact(browser):
     time.sleep(3)
 
     #Contact
-    contact = browser.find_element(By.CSS_SELECTOR,"#landingpage > div:nth-child(16) > div > div:nth-child(2) > div > div > a")
+    contact = browser.find_element(By.CSS_SELECTOR,"#landingpage > div:nth-child(17) > div > div:nth-child(2) > div > div > a")
     contact.click()
 
     time.sleep(3)
@@ -287,19 +329,30 @@ def test_contact(browser):
     time.sleep(3)
 
      #Review
-    review_input = browser.find_element(By.NAME,"Text rating")
-    assert review_input is not None, "Review nu a fost gasit"
-    review_input.send_keys("Foarte bun!")
+    review_inputs = browser.find_elements(By.NAME,"Text rating")
+    assert review_inputs , "Review nu a fost gasit"
+    review_inputs[0].send_keys("Foarte bun!")
 
     #Email
     email_input = browser.find_element(By.NAME,"Email")
     assert email_input is not None, "Email nu a fost gasit"
     email_input.send_keys("mariusneata999@gmail.com")
 
+    time.sleep(3)
+
+    # browser.execute_script("window.scrollTo(0, 300+window.scrollY);")
+
+    actions = ActionChains(browser)
+    actions.send_keys(Keys.PAGE_DOWN)
+    actions.send_keys(Keys.PAGE_DOWN)
+    actions.perform()
+
+    time.sleep(3)
+
     #Checkbox
-    checkbox = browser.find_element(By.ID,"gdpr_checkbox")
-    assert checkbox is not None, "GDPR checkbox nu a fost gasit"
-    checkbox.click()
+    checkbox_list = browser.find_elements(By.ID,"gdpr_checkbox")
+    assert checkbox_list, "GDPR checkbox nu a fost gasit"
+    checkbox_list[0].click()
 
     #Trimite feedback
     send_feedback = browser.find_element(By.CSS_SELECTOR,"#reviewForm > input")
@@ -307,3 +360,80 @@ def test_contact(browser):
     send_feedback.click()
 
     time.sleep(3)
+
+
+
+def test_filtrare(browser:webdriver.Chrome):
+    url = "https://istyle.ro"
+    browser.get(url)
+    browser.maximize_window()
+
+    # Verificare daca pagina s-a încarcat corect
+    assert "iSTYLE" in browser.title, "Pagina iSTYLE nu s-a încărcat corect"
+    
+    # Inchidere Cookie Element
+    cookie_element = browser.find_element(By.XPATH, "//div[4]//button[4]")
+    assert cookie_element.is_displayed(), "Butonul de acceptare cookie nu este vizibil"
+    cookie_element.click()
+    time.sleep(3)
+
+    # Verificare buton cautare
+    click_search = browser.find_element(By.ID, "algolia-showsearch")
+    assert click_search.is_displayed(), "Butonul de căutare nu este vizibil"
+    click_search.click()
+    time.sleep(3)
+
+    # Verificare bara de cautare
+    search_bar = browser.find_element(By.ID, "search")
+    assert search_bar.is_displayed(), "Bara de căutare nu este vizibilă"
+    search_bar.send_keys("Airpods")
+    time.sleep(1)
+    search_bar.send_keys(Keys.ENTER)  
+    time.sleep(3)
+
+    # Scroll până jos la Footer
+    browser.execute_script("window.scrollTo(0, 1800);")
+    time.sleep(3)
+
+    # Inchidere reclama (pop-up)
+    popout_close = browser.find_element(By.CLASS_NAME, "mfp-close")
+    assert popout_close.is_displayed(), "Butonul de închidere a reclamei nu este vizibil"
+    popout_close.click()
+    time.sleep(3)
+
+    # Verificare slider (butonul din stânga)
+    left_button = browser.find_element(By.XPATH, "/html/body/div[1]/main/div[4]/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div[33]/div/div/div[2]/div/div/div[2]")
+    assert left_button.is_displayed(), "Butonul de ajustare filtre nu este vizibil"
+    time.sleep(3)
+
+    # Aplicare acțiune de mutare pe slider
+    action = ActionChains(browser)
+    action.click_and_hold(left_button).move_by_offset(60, 0).release().perform()
+    time.sleep(3)
+
+    # Scroll sus până la Header
+    browser.execute_script("window.scrollTo(0, 200);")
+    time.sleep(3)
+
+    # Verificare produs
+    produs = browser.find_element(By.CSS_SELECTOR, "#instant-search-results-container > div > div:nth-child(1) > div > div > div > div > a")
+    assert produs.is_displayed(), "Produsul nu este vizibil în rezultatele căutării"
+    produs.click()
+    time.sleep(3)
+
+    # Scroll pana jos la adăugare în cos
+    browser.execute_script("window.scrollTo(0, 400);")
+    time.sleep(3)
+
+    # Verificare buton adăugare în cos
+    add_to_cart = browser.find_element(By.XPATH, "/html/body/div[1]/main/div[2]/div[2]/div/div[1]/div/div[2]/div/div[9]/div/div[1]/div[4]/div/div[2]/button/span[4]/span[2]")
+    add_to_cart.click()
+    time.sleep(3)
+
+
+
+
+
+
+
+
